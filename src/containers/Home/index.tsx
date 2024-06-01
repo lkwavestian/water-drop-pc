@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useUserContext } from '../../utils/userHooks';
 
 import style from './index.module.less';
 
 /**
  *
  */
-const Home = ({}) => {
-    return <div className={style.container}>首页</div>;
+const Home = () => {
+    const { store } = useUserContext();
+    return <div className={style.container}>{store.tel}</div>;
 };
 
 export default Home;
