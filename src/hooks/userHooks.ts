@@ -12,11 +12,19 @@ export const useUserContext = () => useAppContext(KEY);
 export const connect = connectFactory(KEY, DEFAULT_VALUE);
 
 export const useGetUser = () => {
+    console.log('useGetUser :>> ');
     const { setStore } = useUserContext();
     const nav = useNavigate();
     const location = useLocation();
-    const { loading } = useQuery<{ getUserInfo: IUser }>(GET_USER, {
+    const { loading, refetch } = useQuery<{ getUserInfo: IUser }>(GET_USER, {
         onCompleted: (data) => {
+            //给个默认的登录
+            setStore({
+                id: 1,
+                name: '测试',
+                tel: 134,
+            });
+            return;
             if (data.getUserInfo) {
                 const { id, name, tel } = data.getUserInfo;
                 setStore({
@@ -36,11 +44,19 @@ export const useGetUser = () => {
             }
         },
         onError: () => {
+            //给个默认的登录
+            setStore({
+                id: 1,
+                name: '测试',
+                tel: 134,
+                refetchHandler: refetch,
+            });
+            return;
             // 如果不在登录页面，但是目前登录异常，那就直接跳到登录页面
             if (location.pathname !== '/login') {
                 nav(`/login?orgUrl=${location.pathname}`);
             }
         },
     });
-    return { loading };
+    return { loading, refetch };
 };
