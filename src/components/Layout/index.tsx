@@ -1,4 +1,4 @@
-import { MenuDataItem, PageContainer, ProLayout } from '@ant-design/pro-components';
+import { MenuDataItem, ProLayout } from '@ant-design/pro-components';
 import { Link, useNavigate, useOutlet } from 'react-router-dom';
 import { useUserContext } from '@/hooks/userHooks';
 import { AUTH_TOKEN } from '@/utils/constants';
@@ -48,7 +48,7 @@ const Layout = () => {
             }}
             menuItemRender={menuItemRender}
         >
-            <PageContainer>{outlet}</PageContainer>
+            {outlet}
         </ProLayout>
     );
 };
