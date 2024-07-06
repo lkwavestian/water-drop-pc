@@ -1,15 +1,16 @@
-import { useUserContext } from '@/hooks/userHooks';
-import style from './index.module.less';
 import { MenuDataItem, PageContainer, ProLayout } from '@ant-design/pro-components';
 import { Link, useNavigate, useOutlet } from 'react-router-dom';
-import { ROUTE_CONFIG } from '@/routes';
+import { useUserContext } from '@/hooks/userHooks';
 import { AUTH_TOKEN } from '@/utils/constants';
+
+import { routes } from '@/routes/menus';
+import style from './index.module.less';
 
 const menuItemRender = (item: MenuDataItem, dom: React.ReactNode) => (
     <Link to={item.path || '/'}>{dom}</Link>
 );
 /**
- *
+ * 外层框架
  */
 const Layout = () => {
     const outlet = useOutlet();
@@ -21,11 +22,11 @@ const Layout = () => {
         localStorage.setItem(AUTH_TOKEN, '');
         nav('/login');
     };
+
     return (
         <ProLayout
-            className={style.container}
-            siderWidth={130}
             layout="mix"
+            siderWidth={130}
             avatarProps={{
                 src: '',
                 title: store.tel,
@@ -39,10 +40,11 @@ const Layout = () => {
                     alt="logo"
                 />
             }
+            className={style.container}
             onMenuHeaderClick={() => nav('/')}
             route={{
                 path: '/',
-                routes: ROUTE_CONFIG,
+                routes,
             }}
             menuItemRender={menuItemRender}
         >
